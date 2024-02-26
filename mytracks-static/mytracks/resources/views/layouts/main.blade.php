@@ -23,10 +23,10 @@
               <a class="nav-link" href="/projects">Projects</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/projects/create">Transposer</a>
+              <a class="nav-link" href="transposer.html">Transposer</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="new-project.html">New project</a>
+              <a class="nav-link" href="/projects/create">New project</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="about.html">About</a>

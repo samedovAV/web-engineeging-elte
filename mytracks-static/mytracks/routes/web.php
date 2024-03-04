@@ -21,9 +21,6 @@ Route::get('/', function () {
         "numberOfProjects" => $noProject,
     ]); // main.blade.php
 });
-
 Route::get('/projects', [ProjectController::class, "list"]);
-
 Route::get('/projects/create', [ProjectController::class, "create"]);
-
 Route::post('/projects/create', [ProjectController::class, "store"]);

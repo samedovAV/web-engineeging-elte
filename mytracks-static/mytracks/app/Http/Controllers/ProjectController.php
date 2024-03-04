@@ -14,7 +14,7 @@ class ProjectController extends Controller
         ];
         return view('projects.list', [
             "projects" => $projects,
-        ]); // projects.blade.php
+        ]); // projects/list.blade.php
     }
 
     public function create() {
@@ -22,10 +22,15 @@ class ProjectController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            "name" => "required",
-            "description" => "nullable",
-            "image_url" => "nullable|url",
+        // dd($request);
+        $validatedData = $request->validate([
+            "name"          => "required",
+            "description"   => "nullable",
+            "image_url"     => "nullable|url",
         ]);
+        // dd($validatedData);
+        // save($validatedData)
+        return redirect("/projects");
     }
+
 }

@@ -7,26 +7,32 @@
     @csrf
     <div class="mb-3">
       <label class="form-label" for="name">Project name</label>
-      <input name="name" type="text" class="form-control" is-invalid id="name" placeholder="">
+      <input value="{{ old('name', '') }}" name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="">
+      @error('name')
       <div class="invalid-feedback">
-        Please choose a username.
+        {{ $message }}
       </div>
+      @enderror
     </div>
 
     <div class="mb-3">
       <label class="form-label" for="description">Description</label>
-      <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+      <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3">{{ old('description', '') }}</textarea>
+      @error('description')
       <div class="invalid-feedback">
-        Please choose a username.
+        {{ $message }}
       </div>
+      @enderror
     </div>
 
     <div class="mb-3">
       <label class="form-label" for="image_url">Background image URL</label>
-      <input name="image_url" type="text" class="form-control" id="image_url" placeholder="">
+      <input value="{{ old('image_url', '') }}" name="image_url" type="text" class="form-control @error('image_url') is-invalid @enderror" id="image_url" placeholder="">
+      @error('image_url')
       <div class="invalid-feedback">
-        Please choose a username.
+        {{ $message }}
       </div>
+      @enderror
     </div>
 
     <div class="mb-3">

@@ -2,35 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
     public function list() {
-        $projects = [
-            [ "name" => "my project 1" ],
-            [ "name" => "my project 2" ],
-            [ "name" => "my project 3" ],
-        ];
+        $projects = Project::all();
         return view('projects.list', [
             "projects" => $projects,
         ]); // projects/list.blade.php
     }
-
     public function create() {
         return view('projects.create');
     }
-
     public function store(Request $request) {
-        // dd($request);
         $validatedData = $request->validate([
             "name"          => "required",
             "description"   => "nullable",
             "image_url"     => "nullable|url",
         ]);
-        // dd($validatedData);
-        // save($validatedData)
+        Project::create($validatedData); //save
         return redirect("/projects");
     }
-
+    public function show($id) {
+        $project = Project::find($id);
+        return view("projects.show", [
+            "project" => $project,
+        ]);
+    }
+    public function edit($id) {
+        $project = Project::find($id);
+        return view('projects.edit', [
+            "project" => $project,
+        ]);
+    }
+    public function update($id, Request $request) {
+        $validatedData = $request->validate([
+            "name"          => "required",
+            "description"   => "nullable",
+            "image_url"     => "nullable|url",
+        ]);
+        $project = Project::find($id);
+        $project->update($validatedData); // save
+        return redirect("/projects/{$id}");
+    }
+    public function delete($id) {
+        $project = Project::find($id);
+        $project->delete();
+        return redirect("/projects");
+    }
 }

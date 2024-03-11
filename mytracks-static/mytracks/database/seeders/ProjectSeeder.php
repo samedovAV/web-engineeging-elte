@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProjectSeeder extends Seeder
 {
@@ -12,6 +13,7 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('projects')->truncate();
+        \App\Models\Project::factory(10)->create();
     }
 }

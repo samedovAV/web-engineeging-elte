@@ -3,8 +3,9 @@
 @section('content')
 <div class="container py-3">
   <h2>Edit project</h2>
-  <form action="" method="post">
+  <form action="{{ route('projects.update', ['project' => $project->id]) }}" method="post">
     @csrf
+    @method("PUT")
     <div class="mb-3">
       <label class="form-label" for="name">Project name</label>
       <input value="{{ old('name', $project->name) }}" name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="">
@@ -17,7 +18,7 @@
 
     <div class="mb-3">
       <label class="form-label" for="description">Description</label>
-      <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3">{{ old('description', $project->description0) }}</textarea>
+      <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3">{{ old('description', $project->description) }}</textarea>
       @error('description')
       <div class="invalid-feedback">
         {{ $message }}

@@ -42,4 +42,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function rentedBooks()
+    {
+        return $this->hasMany(Borrow::class, 'reader_id');
+    }
+
+    public function rentalRequestsManaged()
+    {
+        return $this->hasMany(Borrow::class, 'request_managed_by');
+    }
+
+    public function returnsManaged()
+    {
+        return $this->hasMany(Borrow::class, 'return_managed_by');
+    }
 }

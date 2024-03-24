@@ -5,19 +5,22 @@
   <h2>{{ $project->name }}</h2>
   <p>{{ $project->description }}</p>
   <p>
-    <a href="/projects/{{ $project->id }}/edit" class="btn btn-secondary">Edit project</a>
-    <form action="/projects/{{ $project->id }}/delete" method="post" class="d-inline-block">
+    <a href="{{ route('projects.edit', ['project' => $project->id]) }}" class="btn btn-secondary">Edit project</a>
+    <form action="{{ route('projects.destroy', ['project' => $project->id]) }}" method="post" class="d-inline-block">
       @csrf
+      @method("DELETE")
       <button type="submit" class="btn btn-danger">Delete project</button>
     </form>
     <a href="new-track.html" class="btn btn-primary">Add new track</a>
   </p>
   <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action" style="background-color: #bbb7b4">
+    
+    @foreach($project->tracks as $track)
+    <a href="#" class="list-group-item list-group-item-action" style="background-color: {{ $track->color }} ">
       <p class="d-flex justify-content-between align-items-center">
         <span> 
-          Track 1 
-          <small>track1.wav</small>
+          {{ $track->name }} 
+          <small>{{ $track->filename }}</small>
         </span>
         <span class="badge badge-primary badge-pill">Muted</span>
       </p>
@@ -27,20 +30,8 @@
         <li class="list-group-item p-1">Morbi leo risus</li>
       </ul>
     </a>
+    @endforeach
 
-    <a href="#" class="list-group-item list-group-item-action" style="background-color: #ab7969">
-      <p class="d-flex justify-content-between align-items-center">
-        <span> 
-          Track 1 
-          <small>track1.wav</small>
-        </span>
-      </p>
-      <ul class="list-group list-group-horizontal">
-        <li class="list-group-item p-1">Cras justo odio</li>
-        <li class="list-group-item p-1">Dapibus ac facilisis in</li>
-        <li class="list-group-item p-1">Morbi leo risus</li>
-      </ul>
-    </a>
   </div>
 </div>
 @endsection

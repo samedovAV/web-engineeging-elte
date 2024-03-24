@@ -14,6 +14,10 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         DB::table('projects')->truncate();
-        \App\Models\Project::factory(10)->create();
+        DB::table('tracks')->truncate();
+
+        \App\Models\Project::factory(10)
+            ->hasTracks(5)
+            ->create();
     }
 }

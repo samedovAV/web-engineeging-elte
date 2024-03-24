@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::get('/', [HomeController::class, 'index'])->name('main');
+
+Route::get('/genres/{genre}', [BookController::class, 'listByGenre'])->name('genres.list');
+Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
+Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
+Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');

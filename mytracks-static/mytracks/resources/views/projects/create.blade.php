@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-3">
   <h2>New project</h2>
-  <form action="" method="post">
+  <form action="{{ route("projects.store") }}" method="post">
     @csrf
     <div class="mb-3">
       <label class="form-label" for="name">Project name</label>

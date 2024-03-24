@@ -23,12 +23,16 @@ Route::get('/', function () {
     ]); // main.blade.php
 });
 
-Route::get('/projects', [ProjectController::class, "list"]);
-Route::get('/projects/create', [ProjectController::class, "create"]);
-Route::post('/projects/create', [ProjectController::class, "store"]);
-Route::get('/projects/{id}', [ProjectController::class, "show"]);
-
-Route::get('/projects/{id}/edit', [ProjectController::class, "edit"]);
-Route::post('/projects/{id}/edit', [ProjectController::class, "update"]);
-
-Route::post('/projects/{id}/delete', [ProjectController::class, "delete"]);
+// // listing
+// Route::get('/projects', [ProjectController::class, "list"])->name("projects.list"); 
+// // creating a project
+// Route::get('/projects/create', [ProjectController::class, "create"]); 
+// Route::post('/projects/create', [ProjectController::class, "store"]);
+// // show one project
+// Route::get('/projects/{project}', [ProjectController::class, "show"]);
+// // editing a project
+// Route::get('/projects/{project}/edit', [ProjectController::class, "edit"]);
+// Route::post('/projects/{project}/edit', [ProjectController::class, "update"]);
+// // deleting a project
+// Route::post('/projects/{project}/delete', [ProjectController::class, "delete"]);
+Route::resource('projects', ProjectController::class);

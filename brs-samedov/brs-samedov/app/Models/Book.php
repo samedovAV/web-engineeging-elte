@@ -20,4 +20,14 @@ class Book extends Model
         'isbn',
         'in_stock',
     ];
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class);
+    }
+
+    public function borrows()
+    {
+        return $this->hasMany(Borrow::class);
+    }
 }

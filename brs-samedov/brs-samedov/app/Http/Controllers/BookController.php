@@ -36,9 +36,9 @@ class BookController extends Controller
      * Display the specified resource.
      */
     public function show(Book $book)
-    {
-        //
-    }
+{
+    return view('books.show', compact('book'));
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -62,5 +62,24 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         //
+    }
+
+    public function listByGenre($genre)
+    {
+        $genre = Genre::where('name', $genre)->firstOrFail();
+        $books = $genre->books()->paginate(10);
+
+        return view('books.list_by_genre', compact('genre', 'books'));
+    }
+
+    public function search(Request $request)
+    {
+        $filter = $request->input('filter');
+
+        $books = Book::where('title', 'like', "%$filter%")
+                     ->orWhere('authors', 'like', "%$filter%")
+                     ->paginate(10);
+
+        return view('books.search_results', compact('books', 'filter'));
     }
 }

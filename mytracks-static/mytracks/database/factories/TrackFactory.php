@@ -1,25 +1,14 @@
 <?php
 
-namespace Database\Factories;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Track;
+use Faker\Generator as Faker;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Track>
- */
-class TrackFactory extends Factory
-{
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            "name" => fake()->lastName(),
-            "filename" => null,
-            "color" => fake()->hexColor(),
-        ];
-    }
-}
+$factory->define(Track::class, function (Faker $faker) {
+    return [
+        'name'          => $faker->word,
+        'filename'      => null, // $faker->optional()->file('', '/tmp'),
+        'color'         => $faker->hexColor,
+    ];
+});

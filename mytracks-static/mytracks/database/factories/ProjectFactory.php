@@ -1,25 +1,15 @@
 <?php
 
-namespace Database\Factories;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Project;
+use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
- */
-class ProjectFactory extends Factory
-{
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            "name" => fake()->lastName(),
-            "description" => fake()->optional()->sentence(),
-            "image_url" => fake()->optional()->imageUrl(640, 480, 'project', true),
-        ];
-    }
-}
+$factory->define(Project::class, function (Faker $faker) {
+    return [
+        'name'          => $faker->lastName,
+        'description'   => $faker->optional()->sentence(),
+        'bg_url'        => $faker->optional()->passthrough('https://source.unsplash.com/collection/1548469/320x170?sig=' . Str::random(10)),
+    ];
+});

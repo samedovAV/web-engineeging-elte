@@ -8,8 +8,10 @@ class ProjectFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -17,14 +19,14 @@ class ProjectFormRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            "name"          => "required",
-            "description"   => "nullable",
-            "image_url"     => "nullable|url",
+            'name'        => "required",
+            'description' => "nullable",
+            'bg_url'      => "nullable|url",
         ];
     }
 }

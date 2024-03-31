@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ProjectSeeder extends Seeder
 {
@@ -13,11 +13,12 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('projects')->truncate();
-        DB::table('tracks')->truncate();
-
-        \App\Models\Project::factory(10)
-            ->hasTracks(5)
-            ->create();
+        $users = User::all();
+        $users->each(function ($user) {
+            \App\Models\Project::factory(10)
+                ->for($user)
+                ->hasTracks(5)
+                ->create();
+        });
     }
 }

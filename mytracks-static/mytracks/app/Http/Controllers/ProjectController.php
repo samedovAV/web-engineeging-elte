@@ -3,56 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectFormRequest;
-use App\Models\Project;
+use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
+// php artisan make:controller ProjectController
 class ProjectController extends Controller
 {
-    public function index() {
-        $projects = Project::all();
-        return view('projects.list', [
-            "projects" => $projects,
-        ]); // projects/list.blade.php
-    }
-    public function create() {
-        return view('projects.create');
-    }
-    public function store(ProjectFormRequest $request) {
-        // $validatedData = $request->validate([
-        //     "name"          => "required",
-        //     "description"   => "nullable",
-        //     "image_url"     => "nullable|url",
-        // ]);
-        // Project::create($validatedData); //save
-        Project::create($request->validated()); //save
-        return redirect("/projects");
-    }
-    public function show(Project $project) {
-        // $project = Project::findOrFail($id);
-        return view("projects.show", [
-            "project" => $project,
-        ]);
-    }
-    public function edit(Project $project) {
-        // $project = Project::find($id);
-        return view('projects.edit', [
-            "project" => $project,
-        ]);
-    }
-    public function update(Project $project, ProjectFormRequest $request) {
-        // $validatedData = $request->validate([
-        //     "name"          => "required",
-        //     "description"   => "nullable",
-        //     "image_url"     => "nullable|url",
-        // ]);
-        // $project = Project::find($id);
-        // $project->update($validatedData); // save
-        $project->update($request->validated()); // save
-        return redirect("/projects/{$project->id}");
-    }
-    public function destroy(Project $project) {
-        // $project = Project::find($id);
-        $project->delete();
-        return redirect("/projects");
-    }
+  public function index()
+  {
+    return view('projects.list', [
+      'projects' => Auth::user()->projects,
+    ]);
+  }
+
+  public function show(Project $project)
+  {
+    $this->authorize('access', $project);
+    $project->load('tracks.filters');
+    return view('projects.show', compact('project'));
+  }
+
+  public function create()
+  {
+    return view('projects.create');
+  }
+
+  public function store(ProjectFormRequest $request) 
+  {
+    $data = $request->validated();
+    $data['user_id'] = Auth::id();
+    Project::create($data);
+    return redirect()->route('projects.index');
+  }
+
+  public function edit(Project $project)
+  {
+    $this->authorize('access', $project);
+    return view('projects.edit', compact('project'));
+  }
+
+  public function update(ProjectFormRequest $request, Project $project) 
+  {
+    $this->authorize('access', $project);
+    $project->update($request->validated());
+    return redirect()->route('projects.index');
+  }
+
+  public function destroy(Project $project)
+  {
+    $this->authorize('access', $project);
+    $project->delete();
+    return redirect()->route('projects.index');
+  }
 }

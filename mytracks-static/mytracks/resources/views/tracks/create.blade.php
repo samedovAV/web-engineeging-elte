@@ -1,47 +1,56 @@
-@extends('layouts.main')
+@extends('layout')
+
+@section('title', 'New track')
 
 @section('content')
+    
 <div class="container py-3">
   <h2>New track</h2>
-  <form>
+  <form action="{{ route('projects.tracks.store', ['project' => $id]) }}" method="POST" enctype="multipart/form-data">
+    @csrf
     
-    <div class="mb-3">
-      <label class="form-label" for="name">Track name</label>
-      <input type="text" class="form-control" id="name" placeholder="">
-      <div class="invalid-feedback">
-        Please choose a track name.
-      </div>
+    <div class="form-group">
+      <label for="name">Track name</label>
+      <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', '') }}">
+      @error('name')
+        <div class="invalid-feedback">
+          {{ $message }}
+        </div>
+      @enderror
     </div>
 
-    <div class="mb-3">
-      <label class="form-label" for="file">Audio file</label>
-      <input type="file" class="form-control" id="file" placeholder="">
-      <div class="invalid-feedback">
-        Some problem with the file.
-      </div>
+    <div class="form-group">
+      <label for="file">Audio file</label>
+      <input type="file" name="file" class="form-control-file @error('file') is-invalid @enderror" id="file">
+      @error('file')
+        <div class="invalid-feedback">
+          {{ $message }}
+        </div>
+      @enderror
     </div>
 
-    <div class="mb-3">
-      <label class="form-label" for="color">Color</label>
-      <input type="color" class="form-control form-control-color" id="color" placeholder="">
-      <div class="invalid-feedback">
-        Please choose a color.
-      </div>
+    <div class="form-group">
+      <label for="color">Color</label>
+      <input type="color" name="color" class="form-control @error('color') is-invalid @enderror" id="color" value="{{ old('color', '#ffffff') }}">
+      @error('color')
+        <div class="invalid-feedback">
+          {{ $message }}
+        </div>
+      @enderror
     </div>
 
-    <label class="form-label">Filters</label>
-    <div class="mb-3 d-flex flex-wrap row-gap-3 column-gap-3">
-      <div>
-        <input type="checkbox" class="btn-check" id="btn-check-outlined1" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="btn-check-outlined1">Filter1</label>
-      </div>
-      <div>
-        <input type="checkbox" class="btn-check" id="btn-check-outlined2" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="btn-check-outlined2">Filter2</label>
-      </div>
+    <div class="form-group d-flex flex-wrap">
+      @foreach ($filters as $filter)
+        <div class="custom-control custom-switch col-sm-2">
+          <input type="checkbox" class="custom-control-input" name="filters[]" id="filter-{{ $filter['id'] }}" value="{{ $filter['id'] }}">
+          <label class="custom-control-label" for="filter-{{ $filter['id'] }}">
+            {{ $filter['name'] }}
+          </label>
+        </div>
+      @endforeach
     </div>
 
-    <div class="mb-3">
+    <div class="form-group">
       <button type="submit" class="btn btn-primary">Add new track</button>
     </div>
 

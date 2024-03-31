@@ -2,65 +2,14 @@
 
 namespace App\Policies;
 
-use App\Models\Track;
-use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Track;
+use App\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TrackPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    public function access(User $user, Track $track)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Track $track): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Track $track): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Track $track): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Track $track): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Track $track): bool
-    {
-        //
+        return $track->project->user->id === $user->id;
     }
 }

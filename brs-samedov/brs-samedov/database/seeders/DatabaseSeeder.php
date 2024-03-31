@@ -4,19 +4,32 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Book;
+use App\Models\Genre;
+use App\Models\Borrow;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Truncate tables to reset data
+        User::truncate();
+        Book::truncate();
+        Genre::truncate();
+        Borrow::truncate();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Seed the database
+        $this->call([
+            UserSeeder::class,
+            GenreSeeder::class,
+            BookSeeder::class,
+            BorrowSeeder::class,
+        ]);
     }
 }

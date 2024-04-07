@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('content')
+
+<h1>Book Details</h1>
 <h1>{{ $book->title }}</h1>
 
 <p><strong>Author:</strong> {{ $book->author }}</p>
@@ -13,3 +18,13 @@
 @if ($book->cover_image)
     <img src="{{ asset('storage/' . $book->cover_image) }}" alt="{{ $book->title }}">
 @endif
+
+<a href="{{ route('books.edit', $book) }}">Edit</a>
+
+<form action="{{ route('books.destroy', $book) }}" method="post">
+    @csrf
+    @method('delete')
+    <button type="submit">Delete</button>
+</form>
+
+@endsection

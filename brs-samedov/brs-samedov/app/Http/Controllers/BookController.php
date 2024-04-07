@@ -45,7 +45,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('books.edit', compact('book'));
     }
 
     /**
@@ -53,7 +53,17 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'authors' => ['required', 'string', 'max:255'],
+            'released_at' => ['required', 'date', 'before:now'],
+            'pages' => ['required', 'numeric', 'min:1'],
+            // Add other validation rules
+        ]);
+
+        $book->update($validatedData);
+
+        return redirect()->route('books.show', $book);
     }
 
     /**
@@ -61,7 +71,9 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+
+        return redirect()->route('main'); // Redirect to the main page after deletion
     }
 
     public function listByGenre($genre)

@@ -23,7 +23,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('my-rentals.index') }}">My Rentals</a>
             </li>
-            
+            @if (Auth::check() && Auth::user()->is_librarian)
+                <li class="nav-item">
+                  <a href="{{ route('genres.index') }}">Genre List</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('rentals.index') }}">Rental List</a>
+                </li> 
+            @endif
           </ul>
           @endauth
 

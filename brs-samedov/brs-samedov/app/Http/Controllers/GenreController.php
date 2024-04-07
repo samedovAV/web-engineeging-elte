@@ -13,7 +13,8 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        $genres = Genre::all();
+        return view('genres.index', compact('genres'));
     }
 
     /**
@@ -21,15 +22,22 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        return view('genres.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGenreRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'style' => ['required', 'string', 'in:primary,secondary,success,danger,warning,info,light,dark'],
+        ]);
+
+        Genre::create($validatedData);
+
+        return redirect()->route('genres.index')->with('success', 'Genre added successfully.');
     }
 
     /**
@@ -45,15 +53,22 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        return view('genres.edit', compact('genre'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGenreRequest $request, Genre $genre)
+    public function update(Request $request, Genre $genre)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'style' => ['required', 'string', 'in:primary,secondary,success,danger,warning,info,light,dark'],
+        ]);
+
+        $genre->update($validatedData);
+
+        return redirect()->route('genres.index')->with('success', 'Genre updated successfully.');
     }
 
     /**
@@ -61,6 +76,8 @@ class GenreController extends Controller
      */
     public function destroy(Genre $genre)
     {
-        //
+        $genre->delete();
+
+        return redirect()->route('genres.index')->with('success', 'Genre deleted successfully.');
     }
 }
